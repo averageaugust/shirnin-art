@@ -1,33 +1,24 @@
-// Печатает слова из data-words по очереди, стирает и начинает заново, бесконечно.
-// Без JavaScript и при настройке «уменьшить движение» остаётся полная фраза из HTML.
-// Экранный диктор всегда читает полную фразу: она лежит в скрытом тексте,
-// а печатающаяся коробка спрятана от него через aria-hidden.
-
 const TIMING = {
-  start: 800,          // пауза перед первым словом
-  typeMin: 70,       // задержка между буквами при печати: от typeMin
-  typeSpread: 90,      // до typeMin + typeSpread, чтобы ритм был человеческим
-  hold: 1800,          // слово напечатано и стоит
-  holdLast: 3000,      // последнее слово стоит дольше
-  holdAccent: 4000,    // выделенное слово (data-accent) стоит ещё дольше
-  erase: 45,           // задержка между буквами при стирании
-  gap: 500,            // пустая строка перед следующим словом
+  start: 800,
+  typeMin: 70,
+  typeSpread: 90,
+  hold: 1800,
+  holdLast: 3000,
+  holdAccent: 4000,
+  erase: 45,
+  gap: 500,
 };
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function setupTyper(el) {
-  // Копия исходной разметки: в ней может быть <span lang="en">, чтобы диктор читал английское по-английски
   const original = [...el.childNodes].map((n) => n.cloneNode(true));
   const copyOriginal = () => original.map((n) => n.cloneNode(true));
   const words = el.dataset.words.split('|').map((w) => w.trim()).filter(Boolean);
-  // Выделение (data-accent): начало слова, которое печатается полужирным. Слово с выделением стоит дольше.
-  // Окончание после выделения, например «ом» в «SEO-шником» при data-accent="SEO", остаётся обычным
   const accents = (el.dataset.accent ?? '').split('|').map((w) => w.trim()).filter(Boolean);
   const accentOf = (word) => accents.find((a) => word.startsWith(a)) ?? null;
 
-  // Печатает text в node: выделенная часть в <b class="typer__accent">, остальное обычным текстом
   function render(node, text, accent) {
     if (!accent || !text) {
       node.textContent = text;
@@ -39,7 +30,7 @@ function setupTyper(el) {
     const rest = text.slice(accent.length);
     node.replaceChildren(bold, ...(rest ? [rest] : []));
   }
-  let runId = 0; // каждый новый запуск получает номер; старый цикл видит чужой номер и выходит
+  let runId = 0;
 
   function showStatic() {
     el.classList.remove('is-typing');
@@ -55,8 +46,6 @@ function setupTyper(el) {
     box.className = 'typer__box';
     box.setAttribute('aria-hidden', 'true');
 
-    // Невидимые копии всех слов в одной ячейке: коробка берёт ширину самого широкого из них.
-    // Считать по числу букв нельзя: латиница уже кириллицы
     const ghosts = words.map((word) => {
       const ghost = document.createElement('span');
       ghost.className = 'typer__ghost';
@@ -119,7 +108,6 @@ function setupTyper(el) {
   }
 
   apply();
-  // Настройку движения можно поменять, не закрывая страницу
   reduceMotion.addEventListener('change', apply);
 }
 
