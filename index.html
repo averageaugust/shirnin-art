@@ -106,11 +106,11 @@
       padding-block: var(--pad-block);
       padding-inline: var(--pad);
     }
-    /* Ширина колонки 43rem = 688 px: подпись раздела 7,5rem + текст 35,5rem (568 px).
-       Текст раздела подобран так, чтобы «клиники» встало на первую строку (нужно 558 px, 10 px запаса
-       на разницу браузеров). При кегле 15 px это около 71 знака в строке, в пределах нормы 45–75.
-       Абзац о себе той же ширины, около 86 знаков: для двух строк это допустимо */
-    main > * { max-inline-size: 43rem; }
+    /* Ширина колонки 44,75rem = 716 px: подпись раздела 9,25rem + текст 35,5rem (568 px).
+       Подпись «Чем сейчас занят» занимает 130 px, колонка 148 px оставляет зазор до текста.
+       Текст раздела подобран так, чтобы «клиники» встало на первую строку (нужно 558 px).
+       Абзац о себе той же ширины, около 89 знаков: для двух строк это допустимо */
+    main > * { max-inline-size: 44.75rem; }
 
     h1 { margin: 0; font-size: inherit; line-height: inherit; font-weight: 600; }
     /* Мелкие пометки — дата обновления и (tg): кегль 13 px и серый светлее подписей разделов.
@@ -270,7 +270,7 @@
     /* ---- Разделы: подпись слева серым, текст справа ---- */
     .row {
       display: grid;
-      grid-template-columns: 7.5rem minmax(0, 1fr);
+      grid-template-columns: 9.25rem minmax(0, 1fr);
       margin-block-start: 3.5em;
     }
     .row + .row { margin-block-start: 2em; }
@@ -360,8 +360,8 @@
       white-space: nowrap !important;
     }
 
-    /* «пришлось стать» и печатающееся слово переносятся вместе: «пришлось» не остаётся
-       один в конце строки. Если всё помещается в строку, хвост стоит на ней же */
+    /* «По дороге пришлось стать» и печатающееся слово переносятся вместе: вторая фраза не рвётся
+       на конец строки. Если всё помещается в строку, хвост стоит на ней же */
     .tail { display: inline-block; }
 
     /* ---- Печать слов ----
@@ -424,7 +424,7 @@
       <span class="visually-hidden theme-toggle__to-dark">Включить темную тему</span>
       <span class="visually-hidden theme-toggle__to-light">Включить светлую тему</span>
     </button>
-    <p>Привлекаю пациентов в&nbsp;клинику пластической хирургии и&nbsp;косметологии <a href="https://vipclinic.vip" interestfor="pv-vipclinic">VIP&nbsp;Clinic</a>. По&nbsp;дороге <span class="tail">пришлось стать <span class="typer" data-words="аналитиком|разработчиком|дизайнером|problem solver’ом" data-accent="problem solver">аналитиком, разработчиком, дизайнером и&nbsp;<b class="accent" lang="en">problem solver</b>’ом</span></span></p>
+    <p>Привлекаю пациентов в&nbsp;клинику пластической хирургии и&nbsp;косметологии <a href="https://vipclinic.vip" interestfor="pv-vipclinic">VIP&nbsp;Clinic</a>. <span class="tail">По&nbsp;дороге пришлось стать <span class="typer" data-words="аналитиком|разработчиком|дизайнером|problem solver’ом" data-accent="problem solver">аналитиком, разработчиком, дизайнером и&nbsp;<b class="accent" lang="en">problem solver</b>’ом</span></span></p>
 
     <!-- Превью сайта. Снимок обновляет tools/preview-shot.mjs -->
     <div id="pv-vipclinic" popover="hint" class="hovercard">
@@ -433,7 +433,7 @@
     </div>
 
     <section class="row" aria-labelledby="now-title">
-      <h2 id="now-title" class="row__label">Чем занят</h2>
+      <h2 id="now-title" class="row__label">Чем сейчас занят</h2>
       <div class="row__body">
         <p>Выясняю, какими должны быть страницы услуг и&nbsp;врачей на&nbsp;сайте клиники, чтобы быть полезными как людям, так и&nbsp;поисковым роботам. Хотя сегодня мы говорим о&nbsp;том, что в&nbsp;обоих случаях речь идет <span class="nowrap"><button type="button" class="term" interestfor="pv-google" popovertarget="pv-google" popovertargetaction="show">об&nbsp;одном и&nbsp;том&nbsp;же</button><span id="pv-google" popover="hint" class="hovercard hovercard--text">Google: «<a href="https://about.google/company-info/philosophy/" lang="en">Focus on the user and all else will follow</a>»</span>,</span> без&nbsp;манипулирования конкретными приемами нельзя добиться одновременного роста трафика и&nbsp;конверсий.</p>
       </div>
