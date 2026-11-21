@@ -87,13 +87,14 @@
     main {
       --pad: clamp(1.25rem, 5vw, 5rem);
       --pad-block: clamp(2rem, 1rem + 8vw, 6rem);
+      --column: 44.75rem;
       position: relative;
       max-inline-size: 90rem;
       margin-inline: auto;
       padding-block: var(--pad-block);
       padding-inline: var(--pad);
     }
-    main > * { max-inline-size: 44.75rem; }
+    main > * { max-inline-size: var(--column); }
 
     h1 { margin: 0; font-size: inherit; line-height: inherit; font-weight: 600; }
     .muted { font-size: var(--fs-small); color: var(--color-text-tertiary); }
@@ -262,8 +263,8 @@
 
     .theme-toggle {
       position: absolute;
-      inset-block-start: calc(var(--pad-block) + (4rem - 2rem) / 2);
-      inset-inline-end: calc(var(--pad) - 0.6875rem);
+      inset-block-start: calc(var(--pad-block) + 5rem + (var(--fs-body) * var(--lh-body) - 2rem) / 2);
+      inset-inline-start: calc(var(--pad) + min(var(--column), 100% - 2 * var(--pad)) - 2rem + 0.6875rem);
       display: grid;
       place-items: center;
       inline-size: 2rem;
