@@ -23,7 +23,7 @@ function setupTyper(el) {
   const copyOriginal = () => original.map((n) => n.cloneNode(true));
   const words = el.dataset.words.split('|').map((w) => w.trim()).filter(Boolean);
   // Выделение (data-accent): начало слова, которое печатается полужирным. Слово с выделением стоит дольше.
-  // Окончание после выделения, например «’ом» в «problem solver’ом», остаётся обычным
+  // Окончание после выделения, например «ом» в «SEO-шником» при data-accent="SEO", остаётся обычным
   const accents = (el.dataset.accent ?? '').split('|').map((w) => w.trim()).filter(Boolean);
   const accentOf = (word) => accents.find((a) => word.startsWith(a)) ?? null;
 
