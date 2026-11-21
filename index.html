@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <!-- Сохраненная тема применяется до первой отрисовки, чтобы не мигнула другая -->
+  <script>try{document.querySelector('meta[name="color-scheme"]').content=localStorage.getItem('color-scheme')??'light dark'}catch(e){}</script>
+  <title>Артем Ширнин</title>
+  <meta name="description" content="Привлекаю пациентов в клинику пластической хирургии и косметологии VIP Clinic. Выясняю, какими должны быть страницы услуг и врачей, чтобы быть полезными людям и поисковым роботам.">
+  <link rel="canonical" href="https://shirnin.art/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shirnin.art/">
+  <meta property="og:title" content="Артем Ширнин">
+  <meta property="og:description" content="Привлекаю пациентов в клинику пластической хирургии и косметологии VIP Clinic. По дороге пришлось стать аналитиком, разработчиком, дизайнером и problem solver’ом.">
+  <meta property="og:image" content="https://shirnin.art/avatar.webp">
+  <meta property="og:locale" content="ru_RU">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Шрифт выбран: Golos Text. Пока с Google Fonts, позже положим файлы на сайт -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600&display=swap">
+  <style>
+    /* ---- Цвета и тема ----
+       Серые из палитры oklch.fyi/color-palettes/gray. Тема по умолчанию как в системе,
+       точка справа вверху переключает её (theme.js меняет meta color-scheme).
+       Контраст, норма для текста 4,5:1, для линий 3:1:
+         светлая: текст 18,9; серый текст 5,92; подчёркивание 3,85; ссылка при наведении 4,87
+         тёмная:  текст 15,9; серый текст 5,96; подчёркивание 3,97; ссылка при наведении 5,96 */
+    :root {
+      color-scheme: light dark;
+      &:has(> head > meta[name="color-scheme"][content="dark"])  { color-scheme: dark; }
+      &:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
+
+      --color-bg:             light-dark(oklch(1 0 0),     oklch(0.162 0 0));
+      --color-surface:        light-dark(oklch(1 0 0),     oklch(0.195 0 0));  /* карточка превью */
+      --color-text:           light-dark(oklch(0.178 0 0), oklch(0.933 0 0));
+      --color-text-secondary: light-dark(oklch(0.503 0 0), oklch(0.649 0 0));
+      --color-underline:      light-dark(oklch(0.606 0 0), oklch(0.549 0 0));
+      --color-link-hover:     light-dark(oklch(0.549 0 0), oklch(0.649 0 0));
+      --color-card-ring:      light-dark(oklch(0 0 0 / 0.08), oklch(1 0 0 / 0.1));
+      --color-card-shadow:    light-dark(oklch(0 0 0 / 0.12), oklch(0 0 0 / 0.5));
+      --color-image-outline:  light-dark(oklch(0 0 0 / 0.1),  oklch(1 0 0 / 0.1));
+    }
+
+    /* Шкала кеглей выбрана: всё 15. Имя отличается только начертанием.
+       Размеры в rem, чтобы работала настройка размера шрифта в браузере */
+    :root {
+      --fs-body: 0.9375rem;   /* 15 px */
+      --lh-body: 1.6;
+      --fs-small: 0.8125rem;  /* 13 px, для подписей и дат */
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--color-bg); color: var(--color-text); }
+
+    body {
+      font-family: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Раскладка выбрана: слева, как у daria.works. Страница широкая, текст узкой колонкой */
+    main {
+      --pad: clamp(1.25rem, 5vw, 5rem);
+      --pad-block: clamp(2rem, 1rem + 8vw, 6rem);
+      position: relative;
+      max-inline-size: 90rem;
+      margin-inline: auto;
+      padding-block: var(--pad-block);
+      padding-inline: var(--pad);
+    }
+    /* Ширина колонки 43rem = 688 px: подпись раздела 7,5rem + текст 35,5rem (568 px).
+       Текст раздела подобран так, чтобы «клиники» встало на первую строку (нужно 558 px, 10 px запаса
+       на разницу браузеров). При кегле 15 px это около 71 знака в строке, в пределах нормы 45–75.
+       Абзац о себе той же ширины, около 86 знаков: для двух строк это допустимо */
+    main > * { max-inline-size: 43rem; }
+
+    h1 { margin: 0 0 0.75em; font-size: inherit; line-height: inherit; font-weight: 600; }
+    p { margin: 0 0 0.4em; text-wrap: pretty; }
+
+    a {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.25em;
+      text-decoration-color: var(--color-underline);
+      transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out;
+    }
+
+    /* Наведение: слово и подчёркивание светлеют до одного серого и ссылка чуть растёт.
+       Серый 0.549 из палитры oklch.fyi даёт 4,87:1 на белом, текст остаётся читаемым.
+       Рост требует display: inline-block, поэтому ссылка не переносится внутри себя:
+       для длинных ссылок посреди текста это нужно будет пересмотреть */
+    a { display: inline-block; }
+
+    @media (hover: hover) {
+      a:hover {
+        color: var(--color-link-hover);
+        text-decoration-color: var(--color-link-hover);
+      }
+    }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      a { transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out, scale 0.15s ease-out; }
+      a:hover { scale: 1.04; }
+    }
+
+    /* ---- Превью сайта при наведении на ссылку ----
+       Chrome и Edge показывают карточку сами (interestfor + popover="hint"),
+       в Safari и Firefox то же поведение повторяет hovercard.js */
+    [interestfor] {
+      --interest-delay-start: 0.7s;
+      --interest-delay-end: 0.1s;
+      interest-delay: 0.7s 0.1s;   /* открыть через 0,7 с, закрыть через 0,1 с */
+    }
+
+    .hovercard {
+      display: none;               /* в браузерах без popover карточка просто не видна */
+      inline-size: min(20rem, calc(100vw - 2rem));
+      padding: 0;
+      border: 1px solid transparent;  /* в режиме принудительных цветов тень пропадает, рамка остаётся */
+      border-radius: 12px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      box-shadow:
+        0 0 0 1px var(--color-card-ring),
+        0 12px 32px var(--color-card-shadow);
+      overflow: clip;
+      opacity: 0;
+      transition-property: opacity, display, overlay;
+      transition-duration: 0.12s;   /* закрывается быстрее, чем открывается */
+      transition-timing-function: ease-out;
+      transition-behavior: allow-discrete;
+    }
+
+    .hovercard:popover-open {
+      display: block;
+      opacity: 1;
+      transition-duration: 0.18s;
+    }
+
+    @starting-style {
+      .hovercard:popover-open { opacity: 0; }
+    }
+
+    /* Лёгкий рост от ссылки — только если человек не просил меньше движения */
+    @media (prefers-reduced-motion: no-preference) {
+      .hovercard {
+        transform-origin: top left;
+        scale: 0.97;
+        translate: 0 -4px;
+        transition-property: opacity, scale, translate, display, overlay;
+      }
+      .hovercard:popover-open { scale: 1; translate: 0 0; }
+      @starting-style {
+        .hovercard:popover-open { scale: 0.97; translate: 0 -4px; }
+      }
+    }
+
+    /* Карточка под ссылкой от её начала; у края экрана перескакивает на другую сторону */
+    @supports (position-area: block-end) {
+      .hovercard {
+        inset: auto;
+        margin: 0;
+        margin-block-start: 0.5rem;
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+      }
+    }
+
+    .hovercard img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 40 / 21;
+      outline: 1px solid var(--color-image-outline);
+      outline-offset: -1px;
+    }
+
+    /* Длинная ссылка внутри карточки цитаты переносится как обычный текст и при наведении не растёт:
+       рост требует inline-block, а тогда ссылка уходит на новую строку целиком */
+    .hovercard--text a { display: inline; }
+
+    /* Слово-кнопка и знак препинания после него не разрываются переносом */
+    .nowrap { white-space: nowrap; }
+    .nowrap .hovercard--text { white-space: normal; }
+
+    /* Карточка с текстом вместо снимка (цитата Google) */
+    .hovercard--text {
+      inline-size: max-content;
+      max-inline-size: min(22rem, calc(100vw - 2rem));
+      padding: 0.625rem 0.75rem;
+      line-height: 1.45;
+    }
+
+    /* Слово, у которого есть пояснение в карточке. Это не ссылка, а кнопка:
+       перехода нет, нажатие показывает карточку. Поэтому подчёркивание пунктирное,
+       сплошное на сайте только у ссылок */
+    .term {
+      display: inline-block;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-decoration-line: underline;
+      text-decoration-style: dotted;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.25em;
+      text-decoration-color: var(--color-underline);
+      transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out;
+    }
+    @media (hover: hover) {
+      .term:hover {
+        color: var(--color-link-hover);
+        text-decoration-color: var(--color-link-hover);
+      }
+    }
+    /* Расти при наведении, как ссылка, слово-кнопка не может: оно длиннее, и на 4% наезжает на соседние слова */
+
+    .hovercard__caption {
+      margin: 0;
+      padding: 0.625rem 0.75rem;
+      font-size: var(--fs-small);
+      line-height: 1.4;
+      color: var(--color-text-secondary);
+    }
+
+    /* ---- Разделы: подпись слева серым, текст справа ---- */
+    .row {
+      display: grid;
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      margin-block-start: 3.5em;
+    }
+    .row + .row { margin-block-start: 2em; }
+    .row__label {
+      margin: 0;
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+    .row__body > :last-child { margin-block-end: 0; }
+    @media (width < 30rem) {
+      .row { grid-template-columns: minmax(0, 1fr); row-gap: 0.25em; }
+    }
+
+    /* Аватарка над именем: 64 px, файл 192 px для экранов тройной плотности, 4,8 КБ.
+       Вырезана из оригинала club-optimization-20261029-167.jpg.
+       Подпись для диктора не нужна: имя стоит сразу под фото */
+    .avatar {
+      display: block;
+      inline-size: 4rem;
+      block-size: 4rem;
+      margin-block-end: 1rem;
+      border-radius: 50%;
+      object-fit: cover;
+      outline: 1px solid var(--color-image-outline);
+      outline-offset: -1px;
+    }
+
+    /* ---- Переключатель темы: точка справа вверху, по центру аватарки ----
+       Зона нажатия 32 px, сама точка 10 px. Цвет точки — цвет текста: в светлой теме чёрная, в тёмной белая */
+    .theme-toggle {
+      position: absolute;
+      inset-block-start: calc(var(--pad-block) + (4rem - 2rem) / 2);
+      inset-inline-end: calc(var(--pad) - 0.6875rem);
+      display: grid;
+      place-items: center;
+      inline-size: 2rem;
+      block-size: 2rem;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--color-text);
+      cursor: pointer;
+    }
+    .theme-toggle[hidden] { display: none; }
+    .theme-toggle::before {
+      content: "";
+      inline-size: 0.625rem;
+      block-size: 0.625rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .theme-toggle::before { transition: scale 0.15s ease-out; }
+      .theme-toggle:hover::before { scale: 1.3; }
+    }
+
+    /* Подпись кнопки для диктора зависит от того, какая тема видна сейчас */
+    .theme-toggle__to-light { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-toggle__to-dark { display: none; }
+      :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-toggle__to-light { display: inline; }
+    }
+    :root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-toggle__to-dark { display: none; }
+    :root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-toggle__to-light { display: inline; }
+
+    /* Режим высокой контрастности заменяет фоны: точку темы и курсор печати рисуем системным цветом текста */
+    @media (forced-colors: active) {
+      .theme-toggle::before,
+      .typer__caret {
+        forced-color-adjust: none;
+        background: CanvasText;
+      }
+    }
+
+    .visually-hidden:where(:not(:focus-within, :active)) {
+      position: absolute !important;
+      clip-path: inset(50%) !important;
+      overflow: hidden !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      white-space: nowrap !important;
+    }
+
+    /* «пришлось стать» и печатающееся слово переносятся вместе: «пришлось» не остаётся
+       один в конце строки. Если всё помещается в строку, хвост стоит на ней же */
+    .tail { display: inline-block; }
+
+    /* ---- Печать слов ----
+       Коробка держит ширину самого длинного слова (невидимая копия в той же ячейке),
+       поэтому строка не прыгает, пока слово печатается и стирается */
+    .typer {
+      --caret-w: max(1px, 0.08em);
+      --caret-gap: 0.06em;
+    }
+
+    .typer__box {
+      display: inline-grid;
+    }
+
+    /* Переносы внутри коробки разрешены: если появится слово из нескольких частей,
+       на узком экране оно встанет в две строки, а не вылезет за край */
+    .typer__box > * {
+      grid-area: 1 / 1;
+    }
+
+    .typer__ghost {
+      visibility: hidden;
+      padding-inline-end: calc(var(--caret-w) + var(--caret-gap));
+    }
+
+    .typer__line { justify-self: start; }
+
+    /* Выделенная часть слова печатается полужирным; в невидимой копии тоже, чтобы место под слово было верным.
+       Окончание после выделения («’ом») остаётся обычным */
+    .accent,
+    .typer__accent { font-weight: 600; }
+
+    .typer__caret {
+      display: inline-block;
+      inline-size: var(--caret-w);
+      block-size: 1.1em;
+      margin-inline-start: var(--caret-gap);
+      vertical-align: -0.18em;
+      background: currentColor;
+      animation: caret-blink 1.06s steps(1) infinite;
+    }
+
+    /* Пока буквы печатаются или стираются, курсор не мигает, как в настоящем редакторе */
+    .typer.is-typing .typer__caret { animation: none; }
+
+    @keyframes caret-blink {
+      50% { opacity: 0; }
+    }
+  </style>
+  <script src="typer.js" defer></script>
+  <script src="hovercard.js" defer></script>
+  <script src="theme.js" defer></script>
+</head>
+<body>
+  <main>
+    <img class="avatar" src="avatar.webp" alt="" width="64" height="64" decoding="async">
+    <h1>Артем Ширнин</h1>
+    <button class="theme-toggle" type="button" hidden>
+      <span class="visually-hidden theme-toggle__to-dark">Включить темную тему</span>
+      <span class="visually-hidden theme-toggle__to-light">Включить светлую тему</span>
+    </button>
+    <p>Привлекаю пациентов в&nbsp;клинику пластической хирургии и&nbsp;косметологии <a href="https://vipclinic.vip" interestfor="pv-vipclinic">VIP&nbsp;Clinic</a>. По&nbsp;дороге <span class="tail">пришлось стать <span class="typer" data-words="аналитиком|разработчиком|дизайнером|problem solver’ом" data-accent="problem solver">аналитиком, разработчиком, дизайнером и&nbsp;<b class="accent" lang="en">problem solver</b>’ом</span></span></p>
+
+    <!-- Превью сайта. Снимок обновляет tools/preview-shot.mjs -->
+    <div id="pv-vipclinic" popover="hint" class="hovercard">
+      <img src="previews/vipclinic.webp" alt="" width="400" height="210" fetchpriority="low" decoding="async">
+      <p class="hovercard__caption">vipclinic.vip</p>
+    </div>
+
+    <section class="row" aria-labelledby="now-title">
+      <h2 id="now-title" class="row__label">Чем занят</h2>
+      <div class="row__body">
+        <p>Выясняю, какими должны быть страницы услуг и&nbsp;врачей на&nbsp;сайте клиники, чтобы быть полезными как людям, так и&nbsp;поисковым роботам. Хотя сегодня мы говорим о&nbsp;том, что в&nbsp;обоих случаях речь идет <span class="nowrap"><button type="button" class="term" interestfor="pv-google" popovertarget="pv-google" popovertargetaction="show">об&nbsp;одном и&nbsp;том&nbsp;же</button><span id="pv-google" popover="hint" class="hovercard hovercard--text">Google: «<a href="https://about.google/company-info/philosophy/" lang="en">Focus on the user and all else will follow</a>»</span>,</span> без&nbsp;манипулирования конкретными приемами нельзя добиться одновременного роста трафика и&nbsp;конверсий.</p>
+      </div>
+    </section>
+
+    <section class="row" aria-labelledby="contacts-title">
+      <h2 id="contacts-title" class="row__label">Telegram</h2>
+      <div class="row__body">
+        <p><a href="https://t.me/adoreyouaugust">@adoreyouaugust</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
