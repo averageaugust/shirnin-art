@@ -58,8 +58,8 @@
        Серые из палитры oklch.fyi/color-palettes/gray. Тема по умолчанию как в системе,
        точка справа вверху переключает её (theme.js меняет meta color-scheme).
        Контраст, норма для текста 4,5:1, для линий 3:1:
-         светлая: текст 18,9; серый текст 5,92; подчёркивание 3,85; ссылка при наведении 4,87
-         тёмная:  текст 15,9; серый текст 5,96; подчёркивание 3,97; ссылка при наведении 5,96 */
+         светлая: текст 18,9; серый текст 5,92; пометки 4,87; подчёркивание 3,85; ссылка при наведении 4,87
+         тёмная:  текст 15,9; серый текст 7,8;  пометки 5,96; подчёркивание 3,97; ссылка при наведении 5,96 */
     :root {
       color-scheme: light dark;
       &:has(> head > meta[name="color-scheme"][content="dark"])  { color-scheme: dark; }
@@ -68,7 +68,8 @@
       --color-bg:             light-dark(oklch(1 0 0),     oklch(0.162 0 0));
       --color-surface:        light-dark(oklch(1 0 0),     oklch(0.195 0 0));  /* карточка превью */
       --color-text:           light-dark(oklch(0.178 0 0), oklch(0.933 0 0));
-      --color-text-secondary: light-dark(oklch(0.503 0 0), oklch(0.649 0 0));
+      --color-text-secondary: light-dark(oklch(0.503 0 0), oklch(0.72 0 0));
+      --color-text-tertiary:  light-dark(oklch(0.549 0 0), oklch(0.649 0 0));  /* мелкие пометки: дата, (tg) */
       --color-underline:      light-dark(oklch(0.606 0 0), oklch(0.549 0 0));
       --color-link-hover:     light-dark(oklch(0.549 0 0), oklch(0.649 0 0));
       --color-card-ring:      light-dark(oklch(0 0 0 / 0.08), oklch(1 0 0 / 0.1));
@@ -112,8 +113,10 @@
     main > * { max-inline-size: 43rem; }
 
     h1 { margin: 0; font-size: inherit; line-height: inherit; font-weight: 600; }
-    .updated { margin-block-end: 0.75em; }
-    .muted { color: var(--color-text-secondary); }
+    /* Мелкие пометки — дата обновления и (tg): кегль 13 px и серый светлее подписей разделов.
+       Светлее 0.549 на белом нельзя: 13 px — обычный текст, ему нужно 4,5:1 */
+    .muted { font-size: var(--fs-small); color: var(--color-text-tertiary); }
+    .updated { margin-block-end: 0.7rem; }
     p { margin: 0 0 0.4em; text-wrap: pretty; }
 
     a {
