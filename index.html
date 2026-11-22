@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <script>try{document.querySelector('meta[name="color-scheme"]').content=localStorage.getItem('color-scheme')??'light dark'}catch(e){}</script>
   <title>Артем Ширнин</title>
   <meta name="description" content="Digital-маркетолог в клинике пластической хирургии и косметологии VIP Clinic">
   <link rel="canonical" href="https://shirnin.art/">
@@ -52,8 +51,6 @@
 
     :root {
       color-scheme: light dark;
-      &:has(> head > meta[name="color-scheme"][content="dark"])  { color-scheme: dark; }
-      &:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
 
       --color-bg:             light-dark(oklch(1 0 0),     oklch(0.162 0 0));
       --color-surface:        light-dark(oklch(1 0 0),     oklch(0.195 0 0));
@@ -89,7 +86,7 @@
       --pad-block: clamp(2rem, 1rem + 8vw, 6rem);
       --column: 44.75rem;
       position: relative;
-      max-inline-size: 90rem;
+      max-inline-size: calc(var(--column) + 2 * var(--pad));
       margin-inline: auto;
       padding-block: var(--pad-block);
       padding-inline: var(--pad);
@@ -261,44 +258,7 @@
       outline-offset: -1px;
     }
 
-    .theme-toggle {
-      position: absolute;
-      inset-block-start: calc(var(--pad-block) + 5rem + (var(--fs-body) * var(--lh-body) - 2rem) / 2);
-      inset-inline-start: calc(var(--pad) + min(var(--column), 100% - 2 * var(--pad)) - 2rem + 0.6875rem);
-      display: grid;
-      place-items: center;
-      inline-size: 2rem;
-      block-size: 2rem;
-      padding: 0;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      color: var(--color-text);
-      cursor: pointer;
-    }
-    .theme-toggle[hidden] { display: none; }
-    .theme-toggle::before {
-      content: "";
-      inline-size: 0.625rem;
-      block-size: 0.625rem;
-      border-radius: 50%;
-      background: currentColor;
-    }
-    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-      .theme-toggle::before { transition: scale 0.15s ease-out; }
-      .theme-toggle:hover::before { scale: 1.3; }
-    }
-
-    .theme-toggle__to-light { display: none; }
-    @media (prefers-color-scheme: dark) {
-      :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-toggle__to-dark { display: none; }
-      :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-toggle__to-light { display: inline; }
-    }
-    :root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-toggle__to-dark { display: none; }
-    :root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-toggle__to-light { display: inline; }
-
     @media (forced-colors: active) {
-      .theme-toggle::before,
       .typer__caret {
         forced-color-adjust: none;
         background: CanvasText;
@@ -360,16 +320,11 @@
   </style>
   <script src="typer.js" defer></script>
   <script src="hovercard.js" defer></script>
-  <script src="theme.js" defer></script>
 </head>
 <body>
   <main>
     <img class="avatar" src="avatar.webp" alt="" width="64" height="64" decoding="async">
     <h1>Артем Ширнин</h1>
-    <button class="theme-toggle" type="button" hidden>
-      <span class="visually-hidden theme-toggle__to-dark">Включить темную тему</span>
-      <span class="visually-hidden theme-toggle__to-light">Включить светлую тему</span>
-    </button>
     <p>Привлекаю пациентов в&nbsp;клинику пластической хирургии и&nbsp;косметологии <a href="https://vipclinic.vip" interestfor="pv-vipclinic">VIP&nbsp;Clinic</a>. <span class="tail">По&nbsp;дороге пришлось стать <span class="typer" data-words="аналитиком|разработчиком|дизайнером">аналитиком, разработчиком и&nbsp;дизайнером</span></span></p>
 
     <div id="pv-vipclinic" popover="hint" class="hovercard">
