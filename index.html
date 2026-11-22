@@ -86,6 +86,7 @@
       --fs-body: 0.9375rem;
       --lh-body: 1.6;
       --fs-small: 0.8125rem;
+      --line: calc(var(--fs-body) * var(--lh-body));
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -111,12 +112,12 @@
     }
     main > * { max-inline-size: var(--column); }
 
-    h1 { margin: 0 0 0.375rem; font-family: "Literata", Georgia, serif; font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; }
+    h1 { margin: 0 0 calc(var(--line) / 4); font-family: "Literata", Georgia, serif; font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; }
     .lede { color: var(--color-text-lede); }
     .caps { letter-spacing: 0.06em; }
     .muted { font-size: var(--fs-small); color: var(--color-text-tertiary); }
-    .updated { margin-block: calc(3.5 * var(--fs-body)) 0; }
-    p { margin: 0 0 0.4em; text-wrap: pretty; }
+    .updated { margin-block: calc(2 * var(--line)) 0; }
+    p { margin: 0 0 calc(var(--line) / 4); text-wrap: pretty; }
 
     a {
       color: inherit;
@@ -252,9 +253,9 @@
     .row {
       display: grid;
       grid-template-columns: 9.25rem minmax(0, 1fr);
-      margin-block-start: 3.5em;
+      margin-block-start: calc(2 * var(--line));
     }
-    .row + .row { margin-block-start: 2em; }
+    .row + .row { margin-block-start: var(--line); }
     .row__label {
       margin: 0;
       font-size: inherit;
@@ -264,7 +265,7 @@
     }
     .row__body > :last-child { margin-block-end: 0; }
     @media (width < 30rem) {
-      .row { grid-template-columns: minmax(0, 1fr); row-gap: 0.25em; }
+      .row { grid-template-columns: minmax(0, 1fr); row-gap: calc(var(--line) / 4); }
     }
 
     .avatar {
