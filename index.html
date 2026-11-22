@@ -15,6 +15,7 @@
   <meta property="og:locale" content="ru_RU">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/literata-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: "Golos Text";
@@ -48,6 +49,22 @@
       src: url("fonts/golos-text-latin-ext.woff2") format("woff2");
       unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
     }
+    @font-face {
+      font-family: "Literata";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("fonts/literata-600-cyrillic.woff2") format("woff2");
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+    @font-face {
+      font-family: "Literata";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("fonts/literata-600-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
 
     :root {
       color-scheme: light dark;
@@ -55,6 +72,7 @@
       --color-bg:             light-dark(oklch(1 0 0),     oklch(0.162 0 0));
       --color-surface:        light-dark(oklch(1 0 0),     oklch(0.195 0 0));
       --color-text:           light-dark(oklch(0.178 0 0), oklch(0.933 0 0));
+      --color-text-lede:      light-dark(oklch(0.439 0 0), oklch(0.716 0 0));
       --color-text-secondary: light-dark(oklch(0.549 0 0), oklch(0.649 0 0));
       --color-text-tertiary:  light-dark(oklch(0.606 0 0), oklch(0.606 0 0));
       --color-underline:      light-dark(oklch(0.606 0 0), oklch(0.549 0 0));
@@ -93,7 +111,9 @@
     }
     main > * { max-inline-size: var(--column); }
 
-    h1 { margin: 0; font-size: inherit; line-height: inherit; font-weight: 600; }
+    h1 { margin: 0; font-family: "Literata", Georgia, serif; font-size: inherit; line-height: inherit; font-weight: 600; }
+    .lede { color: var(--color-text-lede); }
+    .caps { letter-spacing: 0.06em; }
     .muted { font-size: var(--fs-small); color: var(--color-text-tertiary); }
     .updated { margin-block: calc(3.5 * var(--fs-body)) 0; }
     p { margin: 0 0 0.4em; text-wrap: pretty; }
@@ -325,7 +345,7 @@
   <main>
     <img class="avatar" src="avatar.webp" alt="" width="64" height="64" decoding="async">
     <h1>Артем Ширнин</h1>
-    <p>Привлекаю пациентов в&nbsp;клинику пластической хирургии и&nbsp;косметологии <a href="https://vipclinic.vip" interestfor="pv-vipclinic">VIP&nbsp;Clinic</a>. <span class="tail">По&nbsp;дороге пришлось стать <span class="typer" data-words="аналитиком|разработчиком|дизайнером">аналитиком, разработчиком и&nbsp;дизайнером</span></span></p>
+    <p class="lede">Привлекаю пациентов в&nbsp;клинику пластической хирургии и&nbsp;косметологии <a href="https://vipclinic.vip" interestfor="pv-vipclinic"><span class="caps">VIP</span>&nbsp;Clinic</a>. <span class="tail">По&nbsp;дороге пришлось стать <span class="typer" data-words="аналитиком|разработчиком|дизайнером">аналитиком, разработчиком и&nbsp;дизайнером</span></span></p>
 
     <div id="pv-vipclinic" popover="hint" class="hovercard">
       <img src="previews/vipclinic.webp" alt="" width="400" height="210" fetchpriority="low" decoding="async">
